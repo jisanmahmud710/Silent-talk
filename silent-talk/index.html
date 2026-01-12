@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SilentTalk - Universal communication platform for deaf, blind, and normal users.">
+    <title>SilentTalk - Universal Communication</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="title-group">
+            <h1 class="app-title">SilentTalk</h1>
+            <div class="subtitle">Universal Communication · Deaf · Blind · Normal</div>
+        </div>
+        <div class="toggle-group">
+            <button id="secretModeToggle" class="toggle-btn" aria-label="Toggle Secret Mode">
+                <span class="toggle-icon">🔒</span>
+                <span class="toggle-label">Secret: OFF</span>
+            </button>
+            <button id="darkModeToggle" class="toggle-btn" aria-label="Toggle Dark Mode">
+                <span class="toggle-icon">🌙</span>
+                <span class="toggle-label">Dark</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Sender Panel -->
+        <section class="panel sender-panel" id="senderPanel">
+            <div class="panel-header">
+                <div class="avatar-group">
+                    <div class="avatar sender-avatar">👤</div>
+                    <div>
+                        <h2 class="panel-title">Sender</h2>
+                        <div class="panel-note">Build: WHO → WHAT → WHERE/WHEN</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Phrases -->
+            <div class="quick-phrases" id="quickPhrases">
+                <div class="quick-label">Quick phrases</div>
+                <div class="quick-buttons">
+                    <button class="quick-btn" data-phrase="help-here">🆘 Need help here</button>
+                    <button class="quick-btn" data-phrase="food-now">🍽️ Food now</button>
+                    <button class="quick-btn" data-phrase="ambulance">🚑 Ambulance</button>
+                </div>
+            </div>
+
+            <!-- Emoji Sentence Builder -->
+            <div class="sentence-builder">
+                <div class="builder-row">
+                    <div class="builder-label">WHO</div>
+                    <div class="symbol-row" id="whoRow" aria-label="Who emojis">
+                        <button class="symbol-btn" data-role="who" data-emoji="👤" aria-label="Person">👤</button>
+                        <button class="symbol-btn" data-role="who" data-emoji="👥" aria-label="Group">👥</button>
+                        <button class="symbol-btn" data-role="who" data-emoji="👉" aria-label="You">👉</button>
+                        <button class="symbol-btn" data-role="who" data-emoji="👶" aria-label="Child">👶</button>
+                        <button class="symbol-btn" data-role="who" data-emoji="🧓" aria-label="Elder">🧓</button>
+                    </div>
+                </div>
+                <div class="builder-row">
+                    <div class="builder-label">WHAT</div>
+                    <div class="symbol-row" id="whatRow" aria-label="What emojis">
+                        <button class="symbol-btn" data-role="what" data-emoji="🆘" aria-label="Help">🆘</button>
+                        <button class="symbol-btn" data-role="what" data-emoji="🚶" aria-label="Walk">🚶</button>
+                        <button class="symbol-btn" data-role="what" data-emoji="⏸️" aria-label="Pause">⏸️</button>
+                        <button class="symbol-btn" data-role="what" data-emoji="🍽️" aria-label="Food">🍽️</button>
+                        <button class="symbol-btn" data-role="what" data-emoji="🚑" aria-label="Ambulance">🚑</button>
+                    </div>
+                </div>
+                <div class="builder-row">
+                    <div class="builder-label">WHERE/WHEN</div>
+                    <div class="symbol-row" id="extraRow" aria-label="Extra emojis">
+                        <button class="symbol-btn" data-role="extra" data-emoji="📍" aria-label="Here">📍</button>
+                        <button class="symbol-btn" data-role="extra" data-emoji="🕒" aria-label="Time">🕒</button>
+                        <button class="symbol-btn" data-role="extra" data-emoji="🏠" aria-label="Home">🏠</button>
+                        <button class="symbol-btn" data-role="extra" data-emoji="🌧️" aria-label="Rain">🌧️</button>
+                        <button class="symbol-btn" data-role="extra" data-emoji="🔁" aria-label="Again">🔁</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sentence Display with Preview -->
+            <div class="message-card sender-card">
+                <div class="card-header">
+                    <span class="card-label">Your message</span>
+                    <div class="preview-toggle" id="previewToggle">
+                        <span>👁 Preview</span>
+                    </div>
+                </div>
+                <div class="sequence-display" id="senderSequence">
+                    <span class="empty-message">Tap symbols to build</span>
+                </div>
+                <div class="preview-text" id="previewText" style="display: none;"></div>
+            </div>
+
+            <!-- Emotion Selector -->
+            <div class="emotion-panel">
+                <div class="message-label">Emotion color</div>
+                <div class="emotion-row" id="emotionRow" aria-label="Emotion colors">
+                    <button class="emotion-dot emotion-red" data-emotion="panic" aria-label="Red panic" title="Panic"></button>
+                    <button class="emotion-dot emotion-orange" data-emotion="urgent" aria-label="Orange urgent" title="Urgent"></button>
+                    <button class="emotion-dot emotion-yellow" data-emotion="concern" aria-label="Yellow concern" title="Concern"></button>
+                    <button class="emotion-dot emotion-blue" data-emotion="calm" aria-label="Blue calm" title="Calm"></button>
+                    <button class="emotion-dot emotion-green" data-emotion="normal" aria-label="Green normal" title="Normal"></button>
+                </div>
+            </div>
+
+            <!-- Sender Reply View -->
+            <div class="message-card reply-card" id="senderReplySection" style="display: none;">
+                <div class="card-header">
+                    <span class="card-label">Receiver reply</span>
+                </div>
+                <div class="sender-reply-box" id="senderReplyBox">
+                    <span class="empty-message">No reply yet</span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="action-buttons">
+                <button class="action-btn clear-btn" id="senderClear">Clear</button>
+                <button class="action-btn send-btn" id="senderSend">Send →</button>
+            </div>
+
+            <div class="status-display" id="senderStatus"></div>
+        </section>
+
+        <!-- Receiver Panel -->
+        <section class="panel receiver-panel" id="receiverPanel">
+            <div class="panel-header">
+                <div class="avatar-group">
+                    <div class="avatar receiver-avatar">👥</div>
+                    <div>
+                        <h2 class="panel-title">Receiver</h2>
+                        <div class="panel-note">View translation → Reply</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice Input (for blind users) -->
+            <div class="voice-input-panel" id="voiceInputPanel">
+                <div class="voice-label">Voice input (speak)</div>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="voiceStartBtn" aria-label="Start voice input">
+                        <span class="voice-icon">🎤</span>
+                        <span>Start speaking</span>
+                    </button>
+                    <div class="voice-status" id="voiceStatus">Ready</div>
+                </div>
+                <div class="voice-text-display" id="voiceTextDisplay" style="display: none;">
+                    <div class="voice-text-label">You said:</div>
+                    <div class="voice-text-content" id="voiceTextContent"></div>
+                </div>
+            </div>
+
+            <!-- Received Message Card -->
+            <div class="message-card receiver-card" id="receiverMessageCard" style="display: none;">
+                <div class="card-header">
+                    <span class="card-label">Received message</span>
+                    <div class="tts-controls" id="ttsControls" style="display: none;">
+                        <button class="tts-btn" id="ttsPlayBtn" aria-label="Play TTS">
+                            <span>🔊 Play</span>
+                        </button>
+                        <button class="tts-btn" id="ttsRepeatBtn" aria-label="Repeat TTS">
+                            <span>🔁 Repeat</span>
+                        </button>
+                        <input type="range" id="ttsSpeed" min="0.5" max="2" step="0.1" value="1" aria-label="TTS Speed">
+                        <span class="tts-speed-label" id="ttsSpeedLabel">1x</span>
+                    </div>
+                </div>
+                <div class="sequence-display" id="receiverSequence">
+                    <span class="empty-message">Waiting...</span>
+                </div>
+                <div class="translation-display" id="translationDisplay">
+                    <div class="translation-text" id="translationText">
+                        <span class="empty-message">Waiting for message...</span>
+                    </div>
+                </div>
+                <div class="emotion-view" id="receiverEmotionView"></div>
+            </div>
+
+            <!-- Reply Buttons -->
+            <div class="reply-panel" id="replyPanel" style="display: none;">
+                <div class="reply-label">Reply to sender</div>
+                <div class="reply-buttons">
+                    <button class="reply-btn reply-understood" data-reply="understood" aria-label="I understand">
+                        <span class="reply-icon">✅</span>
+                        <span class="reply-text">I understand</span>
+                    </button>
+                    <button class="reply-btn reply-help" data-reply="help" aria-label="Help is coming">
+                        <span class="reply-icon">🕒</span>
+                        <span class="reply-text">Help is coming</span>
+                    </button>
+                    <button class="reply-btn reply-repeat" data-reply="repeat" aria-label="Please repeat">
+                        <span class="reply-icon">❓</span>
+                        <span class="reply-text">Please repeat</span>
+                    </button>
+                    <button class="reply-btn reply-cannot" data-reply="cannot" aria-label="I cannot help">
+                        <span class="reply-icon">❌</span>
+                        <span class="reply-text">I cannot help</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="status-display" id="receiverStatus"></div>
+        </section>
+    </main>
+
+    <!-- Message History Sidebar -->
+    <aside class="history-sidebar" id="historySidebar">
+        <div class="history-header">
+            <h3>Message History</h3>
+            <button class="history-close" id="historyClose" aria-label="Close history">×</button>
+        </div>
+        <div class="history-list" id="historyList">
+            <div class="empty-history">No messages yet</div>
+        </div>
+    </aside>
+
+    <!-- History Toggle Button -->
+    <button class="history-toggle" id="historyToggle" aria-label="Toggle message history">
+        <span>📜</span>
+    </button>
+
+    <!-- Feedback Overlay -->
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-message" id="feedbackMessage"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
